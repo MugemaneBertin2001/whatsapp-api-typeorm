@@ -1,15 +1,17 @@
-import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
+import { Injectable, BadRequestException, NotFoundException, Inject } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { Message } from './entities/message.entity'; 
 import { UpdateMessageDto } from './dto/update-message.dto';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class MessageService {
   constructor(
     @InjectRepository(Message)
     private messageRepository: Repository<Message>,
+    @Inject('MESSAGE_SERVICE') private rabbitClient: ClientProxy
   ) {}
 
   async create(createMessageDto: CreateMessageDto): Promise<Message> {
@@ -20,7 +22,10 @@ export class MessageService {
       content: createMessageDto.content,
     };
     const createdMessage = this.messageRepository.create(partialMessage);
-    return this.messageRepository.save(createdMessage);
+    const savedMessage =  this.messageRepository.save(createdMessage);
+    this.rabbitClient.emit("Message-sent",createdMessage
+     )
+    return savedMessage
   }
   
 

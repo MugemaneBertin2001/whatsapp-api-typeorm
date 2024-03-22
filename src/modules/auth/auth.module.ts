@@ -8,6 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { ProfileService } from './profile.service';
+import { AuthGateway } from './auth.gateway';
 @Module({
   imports: [
     PassportModule,
@@ -23,7 +24,7 @@ import { ProfileService } from './profile.service';
   
   ],
   controllers: [AuthController],
-  providers: [AuthService, JwtStrategy, ProfileService],
+  providers: [AuthService, JwtStrategy, ProfileService, AuthGateway],
   exports: [JwtModule, JwtStrategy],
 })
 export class AuthModule {}
