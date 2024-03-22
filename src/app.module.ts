@@ -10,6 +10,8 @@ import { AttachmentModule } from './modules/attachment/attachment.module';
 import { MessageModule } from './modules/message/message.module';
 import { ReactionsModule } from './modules/reactions/reactions.module';
 
+
+
 @Module({
   imports: [
   CustomConfigModule,
@@ -18,7 +20,7 @@ import { ReactionsModule } from './modules/reactions/reactions.module';
     ChatRoomsModule,
     MessageModule,
     ReactionsModule,
-    AttachmentModule,
+    AttachmentModule
   ],
   controllers: [AppController],
   providers: [AppService],
