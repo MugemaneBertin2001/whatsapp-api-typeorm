@@ -77,17 +77,23 @@ Sure, here are the tables represented in a document format:
 2. Navigate to the project directory: `cd whatsapp-api`
 3. Install dependencies: `npm install`
 
-## Configuration
+# Application Configuration
 
-1. Create a `.env` file in the root directory.
-2. Add the following environment variables:
-   ```
-   MONGODB_URI = replace here
-   PORT = 3000
+- **PORT**: The port number on which the server will listen for incoming requests. Default is `6000`.
 
-   JWT_SECRET = replace here
-   JWT_EXPIRES_IN  = replace here
-   ```
+# Database Configuration
+
+- **DB_HOST**: The hostname or IP address of the database server.
+- **DB_PORT**: The port number on which the database server is listening. Default is `3000`.
+- **DB_USERNAME**: The username used to authenticate with the database server.
+- **DB_PASSWORD**: The password used to authenticate with the database server.
+- **DB_NAME**: The name of the database to connect to.
+
+# JWT Configuration
+
+- **JWT_EXPIRES_IN**: The expiration time for JSON Web Tokens (JWT) issued by the application. Example: `'7d'` (7 days).
+- **JWT_SECRET**: The secret key used to sign JWTs and verify their authenticity.
+
 
 ## Usage
 
