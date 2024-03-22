@@ -1,73 +1,103 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# WhatsApp Clone API
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+This is a RESTful API for a WhatsApp clone application, developed using NestJS.
 
-## Description
+## Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## RDM schema
+Sure, here are the tables represented in a document format:
+
+### User Table:
+![Alt Text](./schemas-images/Screenshot%202024-03-19%20061344.png)
+![Alt Text](./schemas-images/Screenshot%202024-03-19%20061401.png)
+![Alt Text](./schemas-images/Screenshot%202024-03-19%20061427.png)
+
+## endpoints testing
+![image](./endpoints-test-images/image_1.png)
+![image](./endpoints-test-images/image_2.png)
+![image](./endpoints-test-images/image_3.png)
+![image](./endpoints-test-images/image_4.png)
+![image](./endpoints-test-images/image_5.png)
+![image](./endpoints-test-images/image_6.png)
+![image](./endpoints-test-images/image_7.png)
+![image](./endpoints-test-images/image_8.png)
+![image](./endpoints-test-images/image_9.png)
+![image](./endpoints-test-images/image_10.png)
+
+## Message queue with Rabbitmq
+![image](./endpoints-test-images/rabbit1.png)
+![image](./endpoints-test-images/rabbit2.png)
+
+### Authentication
+
+- **JWT Authentication**: Secure user authentication using JSON Web Tokens (JWT).
+- **Sign Up**: Endpoint to register a new user account.
+- **Log In**: Endpoint to authenticate existing users.
+
+### Chatroom Management
+
+- **Create Chatroom**: Endpoint to create a new chatroom.
+- **Retrieve Chatrooms**: Endpoint to fetch a list of all chatrooms.
+- **Join Chatroom**: Endpoint to allow users to join a chatroom.
+- **Leave Chatroom**: Endpoint to allow users to leave a chatroom.
+- **Update Chatroom**: (Optional) Endpoint to update chatroom details.
+- **Delete Chatroom**: (Optional) Endpoint to delete a chatroom.
+
+### Messaging
+
+- **Send Message**: Endpoint to send a message to a specific chatroom.
+- **Retrieve Messages**: Endpoint to fetch all messages in a chatroom.
+- **Update Message**: (Optional) Endpoint to update a message.
+- **Delete Message**: (Optional) Endpoint to delete a message.
+- **Attachment Upload**: Ability to attach images, documents, or videos to messages.
+
+### Reaction
+#### Message Reaction: ["thumbsup", "love", "crying", "surprised"]
+
+- **React to Message**: Endpoint to react to a message with a specific reaction.
+- **Retrieve Reactions**: Endpoint to fetch all reactions to a particular message.
+- **Update Reaction**: (Optional) Endpoint to update a reaction.
+- **Delete Reaction**: (Optional) Endpoint to delete a reaction.
+
+### Attachment
+
+- **Upload Attachment**: Endpoint to upload an attachment (image, document, video) to a message.
+- **Retrieve Attachments**: Endpoint to fetch all attachments associated with a message.
+- **Update Attachment**: (Optional) Endpoint to update an attachment.
+- **Delete Attachment**: (Optional) Endpoint to delete an attachment.
+
+
+
+
 
 ## Installation
 
-```bash
-$ npm install
-```
+1. Clone the repository: `git clone <repository-url>`
+2. Navigate to the project directory: `cd whatsapp-api`
+3. Install dependencies: `npm install`
 
-## Running the app
+## Configuration
 
-```bash
-# development
-$ npm run start
+1. Create a `.env` file in the root directory.
+2. Add the following environment variables:
+   ```
+   MONGODB_URI = replace here
+   PORT = 3000
 
-# watch mode
-$ npm run start:dev
+   JWT_SECRET = replace here
+   JWT_EXPIRES_IN  = replace here
+   ```
 
-# production mode
-$ npm run start:prod
-```
+## Usage
 
-## Test
+1. Start the server: `npm start`
+2. Use API endpoints to perform various actions, such as authentication, chatroom management, and messaging.
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+This project is licensed under the [MIT License](LICENSE).
+
+---
+ 
