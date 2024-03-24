@@ -3,15 +3,19 @@ import { CreateMessageDto } from './dto/create-message.dto';
 import { Message } from './entities/message.entity';
 import { MessageService } from './message.service';
 import { UpdateMessageDto } from './dto/update-message.dto';
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { AuthGuard } from '@nestjs/passport';
+import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
 
 @Controller('api/:chatRoomId/messages')
 @UseGuards(AuthGuard('jwt'))
+@WebSocketGateway()
 export class MessageController {
   constructor(private readonly messageService: MessageService) {}
+  @WebSocketServer()
+  server;
 
   @Post()
+  @SubscribeMessage('message')
   async createMessage(
     @Req() req,
     @Body() createMessageDto: CreateMessageDto,
@@ -26,7 +30,7 @@ export class MessageController {
         senderId: req.user._id, 
         chatRoomId, 
       });
-      
+
       return { message: 'Message created successfully', data: createdMessage };
     } catch (error) {
       if (error instanceof BadRequestException) {

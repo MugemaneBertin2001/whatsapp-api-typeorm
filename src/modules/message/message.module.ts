@@ -5,9 +5,13 @@ import { Message } from './entities/message.entity';
 import { MessageService } from './message.service';
 import { MessageController } from './message.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { ProducerService } from 'src/kafka/producer.service';
+import { ConsumerService } from 'src/kafka/consumer.service';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     TypeOrmModule.forFeature([Message]),
     ClientsModule.register([
       {
@@ -24,6 +28,6 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     ]),
   ], 
   controllers: [MessageController],
-  providers: [MessageService],
+  providers: [MessageService, ProducerService, ConsumerService],
 })
 export class MessageModule {}

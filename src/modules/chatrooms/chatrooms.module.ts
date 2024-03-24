@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     PassportModule,
     TypeOrmModule.forFeature([ChatRoom]), 
   ],
