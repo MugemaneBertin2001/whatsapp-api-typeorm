@@ -5,16 +5,18 @@ import { CreateMessageDto } from './dto/create-message.dto';
 import { Message } from './entities/message.entity'; 
 import { UpdateMessageDto } from './dto/update-message.dto';
 import { ClientProxy } from '@nestjs/microservices';
+import { ProducerService } from 'src/kafka/producer.service';
 
 @Injectable()
 export class MessageService {
   constructor(
     @InjectRepository(Message)
     private messageRepository: Repository<Message>,
-    @Inject('MESSAGE_SERVICE') private rabbitClient: ClientProxy
+    @Inject('MESSAGE_SERVICE') private rabbitClient: ClientProxy,
+    private readonly producerService: ProducerService
   ) {}
 
-  async create(createMessageDto: CreateMessageDto): Promise<Message> {
+  async create(createMessageDto: CreateMessageDto): Promise<any> {
     if (!createMessageDto.content) {
       throw new BadRequestException('Message content is required.');
     }
@@ -23,8 +25,17 @@ export class MessageService {
     };
     const createdMessage = this.messageRepository.create(partialMessage);
     const savedMessage =  this.messageRepository.save(createdMessage);
-    this.rabbitClient.emit("Message-sent",createdMessage
-     )
+    // queuing msg on rabbitmq
+    this.rabbitClient.emit("Message-sent",createdMessage)
+    // streaming msg on kafk
+    await this.producerService.produce({
+      topic: 'Messaging-topic',
+      messages: [{
+        value: `Message content: ${createMessageDto.content}`
+      }
+      ]
+    })
+
     return savedMessage
   }
   

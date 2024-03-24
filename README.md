@@ -71,17 +71,17 @@ Sure, here are the tables represented in a document format:
 
 
 
-## Installation
+### Installation
 
 1. Clone the repository: `git clone <repository-url>`
 2. Navigate to the project directory: `cd whatsapp-api`
 3. Install dependencies: `npm install`
 
-# Application Configuration
+### Application Configuration
 
 - **PORT**: The port number on which the server will listen for incoming requests. Default is `6000`.
 
-# Database Configuration
+### Database Configuration
 
 - **DB_HOST**: The hostname or IP address of the database server.
 - **DB_PORT**: The port number on which the database server is listening. Default is `3000`.
@@ -89,13 +89,13 @@ Sure, here are the tables represented in a document format:
 - **DB_PASSWORD**: The password used to authenticate with the database server.
 - **DB_NAME**: The name of the database to connect to.
 
-# JWT Configuration
+### JWT Configuration
 
 - **JWT_EXPIRES_IN**: The expiration time for JSON Web Tokens (JWT) issued by the application. Example: `'7d'` (7 days).
 - **JWT_SECRET**: The secret key used to sign JWTs and verify their authenticity.
 
 
-## Usage
+### Usage
 
 1. Start the server: `npm start`
 2. Use API endpoints to perform various actions, such as authentication, chatroom management, and messaging.
