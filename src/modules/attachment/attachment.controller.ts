@@ -1,4 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, NotFoundException, UseInterceptors, UploadedFile, BadRequestException, HttpException, HttpStatus } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  NotFoundException,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException,
+  HttpException,
+  HttpStatus,
+} from '@nestjs/common';
 import { AttachmentService } from './attachment.service';
 import { AttachmentDto } from './dto/create-attachment.dto';
 import { Attachment } from './entities/attachment.entity';
@@ -15,23 +30,31 @@ export class AttachmentController {
   constructor(private readonly attachmentService: AttachmentService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('file', {
-    storage: diskStorage({
-      destination: (req,file,cb)=>{
-        return cb(null,`./uploads/${file.mimetype.split('/')[0].concat('s')}`)
-      },
-      filename: (req, file, cb) => {
-        const randomName = Array(32).fill(null).map(() => (Math.round(Math.random() * 16)).toString(16)).join('');
-        return cb(null, `/${randomName}${extname(file.originalname)}`);
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: (req, file, cb) => {
+          return cb(
+            null,
+            `./uploads/${file.mimetype.split('/')[0].concat('s')}`,
+          );
+        },
+        filename: (req, file, cb) => {
+          const randomName = Array(32)
+            .fill(null)
+            .map(() => Math.round(Math.random() * 16).toString(16))
+            .join('');
+          return cb(null, `/${randomName}${extname(file.originalname)}`);
+        },
+      }),
+      limits: {
+        fileSize: 10 * 1024 * 1024,
       },
     }),
-    limits:{
-      fileSize:  10 * 1024 * 1024,
-    }
-  }))
+  )
   async create(
     @Body() createAttachmentDto: AttachmentDto,
-    @UploadedFile() file, 
+    @UploadedFile() file,
     @Param('messageId') messageId: string,
   ): Promise<Attachment> {
     createAttachmentDto.url = file.path;
@@ -69,7 +92,10 @@ export class AttachmentController {
   }
 
   @Patch(':id')
-  async update(@Param('id') id: any, @Body() updateAttachmentDto: Partial<AttachmentDto>): Promise<any> {
+  async update(
+    @Param('id') id: any,
+    @Body() updateAttachmentDto: Partial<AttachmentDto>,
+  ): Promise<any> {
     try {
       return await this.attachmentService.update(id, updateAttachmentDto);
     } catch (error) {
@@ -85,18 +111,20 @@ export class AttachmentController {
       if (!attachment) {
         throw new HttpException('Attachment not found', HttpStatus.NOT_FOUND);
       }
-      
-      const filePath = attachment.filePath; 
+
+      const filePath = attachment.filePath;
       if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
       }
-      
+
       await this.attachmentRepository.remove(attachment);
-      
+
       return 'Attachment deleted successfully';
     } catch (error) {
-      throw new HttpException('Could not delete attachment', HttpStatus.INTERNAL_SERVER_ERROR);
+      throw new HttpException(
+        'Could not delete attachment',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 }
-

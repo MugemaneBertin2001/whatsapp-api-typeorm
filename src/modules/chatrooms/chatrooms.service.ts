@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, UnauthorizedException, UseGuards } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+  UseGuards,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateChatRoomDto } from './dto/create-chatroom.dto';
@@ -13,7 +18,10 @@ export class ChatRoomsService {
     private readonly chatRoomRepository: Repository<ChatRoom>,
   ) {}
 
-  async create(createChatRoomDto: CreateChatRoomDto, creatorId: string): Promise<ChatRoom> {
+  async create(
+    createChatRoomDto: CreateChatRoomDto,
+    creatorId: string,
+  ): Promise<ChatRoom> {
     const createdRoom = this.chatRoomRepository.create({
       ...createChatRoomDto,
       creator: creatorId,
@@ -28,22 +36,24 @@ export class ChatRoomsService {
 
   async findOne(roomId: any): Promise<ChatRoom> {
     const room = await this.chatRoomRepository.findOne({
-      where:{
-        id: roomId
-      }
+      where: {
+        id: roomId,
+      },
     });
     if (!room) {
-        throw new NotFoundException('Chat room not found');
+      throw new NotFoundException('Chat room not found');
     }
     return room;
-}
+  }
 
-
-  async update(roomId: any, updateChatRoomDto: CreateChatRoomDto): Promise<ChatRoom> {
+  async update(
+    roomId: any,
+    updateChatRoomDto: CreateChatRoomDto,
+  ): Promise<ChatRoom> {
     const existingRoom = await this.chatRoomRepository.findOne({
-      where:{
-        id: roomId
-      }
+      where: {
+        id: roomId,
+      },
     });
     if (!existingRoom) {
       throw new NotFoundException('Chat room not found');
@@ -57,31 +67,30 @@ export class ChatRoomsService {
     if (result.affected === 0) {
       throw new NotFoundException('Chat room not found');
     }
-    return "Chat room deleted successfully";
+    return 'Chat room deleted successfully';
   }
 
   async joinChatRoom(roomId: any, userId: string): Promise<boolean> {
     const room = await this.chatRoomRepository.findOne({
       where: {
-        id: roomId
-      }
+        id: roomId,
+      },
     });
 
     if (!room) {
-        throw new NotFoundException('Chat room not found');
+      throw new NotFoundException('Chat room not found');
     }
 
     const participantsSet = new Set(room.participants);
     if (participantsSet.has(userId.toString())) {
-        room.participants = room.participants.filter(participantId => participantId !== userId.toString());
+      room.participants = room.participants.filter(
+        (participantId) => participantId !== userId.toString(),
+      );
     } else {
-        room.participants.push(userId.toString());
+      room.participants.push(userId.toString());
     }
 
     await this.chatRoomRepository.save(room);
-    return true; 
-}
-
-
-
+    return true;
+  }
 }

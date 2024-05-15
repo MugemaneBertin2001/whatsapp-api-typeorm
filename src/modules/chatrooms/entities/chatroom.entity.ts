@@ -1,13 +1,13 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity({name:"chatRooms"})
+@Entity({ name: 'chatRooms' })
 export class ChatRoom {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column({ nullable: false })
   name: string;
-  
+
   @Column({ nullable: false })
   creator: string;
 

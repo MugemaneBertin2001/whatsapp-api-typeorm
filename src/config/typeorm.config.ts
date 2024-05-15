@@ -7,12 +7,12 @@ import { Reaction } from 'src/modules/reactions/entities/reactions.entity';
 
 const TypeOrmConf: TypeOrmModuleOptions = {
   type: 'postgres',
-  host: 'localhost', 
-  port:  5432,
-  username: 'postgres', 
-  password: 'Mine@123', 
-  database:'postgres', 
-  entities: [User,ChatRoom,Message,Reaction,Attachment],
+  host: 'localhost',
+  port: 5432,
+  username: 'postgres',
+  password: 'Mine@123',
+  database: 'postgres',
+  entities: [User, ChatRoom, Message, Reaction, Attachment],
   synchronize: true,
 };
 

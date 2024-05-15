@@ -1,5 +1,11 @@
 import { Optional } from '@nestjs/common';
-import { IsString, IsArray, ArrayNotEmpty, isString, IsNotEmpty } from 'class-validator';
+import {
+  IsString,
+  IsArray,
+  ArrayNotEmpty,
+  isString,
+  IsNotEmpty,
+} from 'class-validator';
 
 export class CreateMessageDto {
   @IsString()
@@ -8,11 +14,11 @@ export class CreateMessageDto {
 
   @IsString()
   @IsNotEmpty()
-   chatRoomId: string
+  chatRoomId: string;
 
   @IsString()
   @IsNotEmpty()
-   senderId: string
+  senderId: string;
 
   @IsString({ each: true })
   @IsArray()

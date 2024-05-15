@@ -8,7 +8,7 @@ export class AttachmentDto {
   @IsNotEmpty()
   @IsString()
   type: string;
-  
+
   @IsOptional()
   @IsNumber()
   size?: number;

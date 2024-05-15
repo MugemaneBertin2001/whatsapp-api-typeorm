@@ -29,9 +29,9 @@ describe('AuthGateway', () => {
   it('should handle signup successfully', async () => {
     const client = { emit: jest.fn() };
     const signUpDto: SignUpDto = {
-        name: '',
-        email: '',
-        password: ''
+      name: '',
+      email: '',
+      password: '',
     };
     const token = 'sample_token';
     (authService.signUp as jest.Mock).mockResolvedValueOnce({ token });
@@ -44,8 +44,8 @@ describe('AuthGateway', () => {
   it('should handle login successfully', async () => {
     const client = { emit: jest.fn() };
     const loginDto: LoginDto = {
-        email: '',
-        password: ''
+      email: '',
+      password: '',
     };
     const token = 'sample_token';
     (authService.login as jest.Mock).mockResolvedValueOnce({ token });
