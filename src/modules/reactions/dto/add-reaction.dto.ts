@@ -12,5 +12,5 @@ export class AddReactionDto {
 
   @IsNotEmpty()
   @IsString()
-  userId: string; 
+  userId: string;
 }

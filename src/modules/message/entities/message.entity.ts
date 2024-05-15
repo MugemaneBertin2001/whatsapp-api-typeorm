@@ -1,9 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
-import { User } from '../../auth/entities/user.entity';  
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
+import { User } from '../../auth/entities/user.entity';
 import { ChatRoom } from '../../chatrooms/entities/chatroom.entity';
-import { Attachment } from 'src/modules/attachment/entities/attachment.entity'; 
+import { Attachment } from 'src/modules/attachment/entities/attachment.entity';
 
-@Entity({name: "messages"})
+@Entity({ name: 'messages' })
 export class Message {
   @PrimaryGeneratedColumn()
   id: number;
@@ -19,7 +25,6 @@ export class Message {
   @JoinColumn({ name: 'chatRoomId' })
   chatRoom: ChatRoom;
 
-  
   @ManyToOne(() => Attachment)
   @JoinColumn({ name: 'attachmentId' })
   attachments: Attachment[];

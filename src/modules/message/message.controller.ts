@@ -1,10 +1,28 @@
-import { BadRequestException, Body, Controller, Delete, Get, HttpException, HttpStatus, NotFoundException, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  NotFoundException,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { CreateMessageDto } from './dto/create-message.dto';
 import { Message } from './entities/message.entity';
 import { MessageService } from './message.service';
 import { UpdateMessageDto } from './dto/update-message.dto';
 import { AuthGuard } from '@nestjs/passport';
-import { SubscribeMessage, WebSocketGateway, WebSocketServer } from '@nestjs/websockets';
+import {
+  SubscribeMessage,
+  WebSocketGateway,
+  WebSocketServer,
+} from '@nestjs/websockets';
 
 @Controller('api/:chatRoomId/messages')
 @UseGuards(AuthGuard('jwt'))
@@ -27,8 +45,8 @@ export class MessageController {
       }
       const createdMessage = await this.messageService.create({
         ...createMessageDto,
-        senderId: req.user._id, 
-        chatRoomId, 
+        senderId: req.user._id,
+        chatRoomId,
       });
 
       return { message: 'Message created successfully', data: createdMessage };
@@ -37,7 +55,10 @@ export class MessageController {
         return { error: error.message };
       }
       console.error('Failed to create message:', error);
-      throw new HttpException('Internal server error', HttpStatus.INTERNAL_SERVER_ERROR); 
+      throw new HttpException(
+        'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 
@@ -56,15 +77,24 @@ export class MessageController {
   }
 
   @Patch(':msgId')
-  async update(@Param('msgId') id: any, @Body() updateMessageDto: UpdateMessageDto): Promise<Message> {
+  async update(
+    @Param('msgId') id: any,
+    @Body() updateMessageDto: UpdateMessageDto,
+  ): Promise<Message> {
     try {
-      const updatedMessage = await this.messageService.update(id, updateMessageDto);
+      const updatedMessage = await this.messageService.update(
+        id,
+        updateMessageDto,
+      );
       return updatedMessage;
     } catch (err) {
       if (err instanceof NotFoundException) {
         throw new HttpException(err.message, HttpStatus.NOT_FOUND);
       }
-      throw new HttpException('Error: '.concat(err.message), HttpStatus.INTERNAL_SERVER_ERROR); 
+      throw new HttpException(
+        'Error: '.concat(err.message),
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
 

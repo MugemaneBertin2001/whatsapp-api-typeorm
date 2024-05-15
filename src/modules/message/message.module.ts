@@ -1,7 +1,6 @@
-
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Message } from './entities/message.entity'; 
+import { Message } from './entities/message.entity';
 import { MessageService } from './message.service';
 import { MessageController } from './message.controller';
 import { ClientsModule, Transport } from '@nestjs/microservices';
@@ -21,12 +20,12 @@ import { PassportModule } from '@nestjs/passport';
           urls: ['amqp://localhost:5672'],
           queue: 'message_queue',
           queueOptions: {
-            durable: false
+            durable: false,
           },
         },
       },
     ]),
-  ], 
+  ],
   controllers: [MessageController],
   providers: [MessageService, ProducerService, ConsumerService],
 })

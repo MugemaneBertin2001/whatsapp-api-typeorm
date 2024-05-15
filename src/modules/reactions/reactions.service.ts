@@ -1,7 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Reaction } from './entities/reactions.entity'; 
+import { Reaction } from './entities/reactions.entity';
 import { AddReactionDto } from './dto/add-reaction.dto';
 
 @Injectable()
@@ -13,7 +13,11 @@ export class ReactionService {
 
   async addReaction(addReactionDto: AddReactionDto): Promise<Reaction> {
     const { type, userId, messageId } = addReactionDto;
-    const reactionData: Partial<Reaction> = { type, userId: parseInt(userId), messageId: parseInt(messageId) };
+    const reactionData: Partial<Reaction> = {
+      type,
+      userId: parseInt(userId),
+      messageId: parseInt(messageId),
+    };
 
     try {
       const reaction = this.reactionRepository.create(reactionData);
@@ -26,7 +30,7 @@ export class ReactionService {
   async getReactionsForMessage(messageId: number): Promise<Reaction[]> {
     try {
       const reactions = await this.reactionRepository.find({
-        where: { messageId }
+        where: { messageId },
       });
 
       if (!reactions || reactions.length === 0) {

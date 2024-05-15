@@ -1,7 +1,13 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 import { Message } from '../../message/entities/message.entity'; // Import the Message entity if not already imported
 
-@Entity({name:"attachments"})
+@Entity({ name: 'attachments' })
 export class Attachment {
   @PrimaryGeneratedColumn()
   id: number;
