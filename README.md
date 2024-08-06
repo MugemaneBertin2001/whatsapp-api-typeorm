@@ -6,8 +6,6 @@ This is a RESTful API for a WhatsApp clone application, developed using NestJS.
 ## Features
 
 ## RDM schema
-Sure, here are the tables represented in a document format:
-
 ### User Table:
 ![Alt Text](./schemas-images/Screenshot%202024-03-19%20061344.png)
 ![Alt Text](./schemas-images/Screenshot%202024-03-19%20061401.png)
